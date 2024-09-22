@@ -441,3 +441,50 @@ footer_html = f"""
 
 # Inject the HTML for the footer
 st.markdown(footer_html, unsafe_allow_html=True)
+
+import streamlit as st
+from pymongo import MongoClient
+
+# Connect to MongoDB
+def connect_to_mongo():
+    # Replace with your MongoDB connection string
+    client = MongoClient("mongodb+srv://lexmoonpvtltd:Lexmoon24@lexmoon1.o77r1.mongodb.net/?retryWrites=true&w=majority&appName=lexmoon1")
+    db = client["test"]
+    collection = db["users"]
+    return collection
+
+# Fetch user data from MongoDB
+def get_user_profile(collection, email):
+    return collection.find_one({"email": email})
+
+def main():
+    st.title("Profile Page")
+
+    # Connect to MongoDB
+    collection = connect_to_mongo()
+
+    # Get the email from the query parameters
+    query_params = st.experimental_get_query_params()
+    email = query_params.get("email", [None])[0]  # Extract email from query
+
+    if email:
+        user_profile = get_user_profile(collection, email)
+
+        # Display username in sidebar as a profile
+        if user_profile:
+            st.sidebar.markdown(
+                f"<h3 style='text-align: right;'> {user_profile.get('name')}</h3>",
+                unsafe_allow_html=True
+            )
+            st.subheader(f"Welcome, {user_profile.get('name')}!")
+            st.write(f"**Name:** {user_profile.get('name')}")
+            st.write(f"**Email:** {user_profile.get('email')}")
+        else:
+            st.sidebar.write("User not found!")
+            st.subheader("Welcome, Guest!")
+            st.write("No profile data available.")
+    else:
+        st.write("No email provided.")
+
+if __name__ == "__main__":
+    main()
