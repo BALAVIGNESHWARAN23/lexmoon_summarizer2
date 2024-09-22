@@ -442,7 +442,7 @@ footer_html = f"""
 # Inject the HTML for the footer
 st.markdown(footer_html, unsafe_allow_html=True)
 
-import streamlit as st
+
 from pymongo import MongoClient
 
 # Connect to MongoDB
