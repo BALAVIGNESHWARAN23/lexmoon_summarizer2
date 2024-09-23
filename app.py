@@ -13,7 +13,7 @@ from datetime import datetime
 # Load environment variables
 load_dotenv()
 openai.api_key = os.getenv("OPENAI_API_KEY")
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = os.getenv("APP-CRED")
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = os.getenv("APP_CRED")
 
 # Set page config with custom icon
 im = Image.open("./20240917_222343.png")
