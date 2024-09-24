@@ -18,39 +18,56 @@ import toml
 
 
 
-load_dotenv()
+# load_dotenv()
 
 
+# openai_api_key = st.secrets["openai"]["api_key"]
+# app_cred = st.secrets["APP_CRED"]
+
+# openai.api_key = openai_api_key 
+
+# Create a service account JSON dynamically
+# service_account_info = {
+#     "type": app_cred["type"],
+#     "project_id": app_cred["project_id"],
+#     "private_key_id": app_cred["private_key_id"],
+#     "private_key": app_cred["private_key"].replace('\n', '\\n'),  
+#     "client_email": app_cred["client_email"],
+#     "client_id": app_cred["client_id"],
+#     "auth_uri": app_cred["auth_uri"],
+#     "token_uri": app_cred["token_uri"],
+#     "auth_provider_x509_cert_url": app_cred["auth_provider_x509_cert_url"],
+#     "client_x509_cert_url": app_cred["client_x509_cert_url"],
+# }
+
+
+
+
+
+# # Save to a temporary JSON file
+# import json
+# with open("temp_service_account.json", "w") as json_file:
+#     json.dump(service_account_info, json_file)
+
+# os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "temp_service_account.json"
+
+
+from google.oauth2 import service_account
+
+
+# Load secrets from Streamlit
 openai_api_key = st.secrets["openai"]["api_key"]
 app_cred = st.secrets["APP_CRED"]
 
-openai.api_key = openai_api_key 
+# Set OpenAI API key
+openai.api_key = openai_api_key
 
-Create a service account JSON dynamically
-service_account_info = {
-    "type": app_cred["type"],
-    "project_id": app_cred["project_id"],
-    "private_key_id": app_cred["private_key_id"],
-    "private_key": app_cred["private_key"].replace('\n', '\\n'),  
-    "client_email": app_cred["client_email"],
-    "client_id": app_cred["client_id"],
-    "auth_uri": app_cred["auth_uri"],
-    "token_uri": app_cred["token_uri"],
-    "auth_provider_x509_cert_url": app_cred["auth_provider_x509_cert_url"],
-    "client_x509_cert_url": app_cred["client_x509_cert_url"],
-}
+# Create credentials directly from the app_cred dictionary
+credentials = service_account.Credentials.from_service_account_info(app_cred)
 
+# Use the credentials where necessary, for example, in Google API calls or other services
 
-
-
-
-# Save to a temporary JSON file
-import json
-with open("temp_service_account.json", "w") as json_file:
-    json.dump(service_account_info, json_file)
-
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "temp_service_account.json"
-
+st.write("Google Cloud authentication successful.")
 
 
 # Set page config with custom icon
