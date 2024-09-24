@@ -27,19 +27,35 @@ app_cred = st.secrets["APP_CRED"]
 openai.api_key = openai_api_key 
 
 # Create a service account JSON dynamically
-service_account_info = {
-    "type": app_cred["type"],
-    "project_id": app_cred["project_id"],
-    "private_key_id": app_cred["private_key_id"],
-    "private_key": app_cred["private_key"].replace('\n', '\\n'),  
-    "client_email": app_cred["client_email"],
-    "client_id": app_cred["client_id"],
-    "auth_uri": app_cred["auth_uri"],
-    "token_uri": app_cred["token_uri"],
-    "auth_provider_x509_cert_url": app_cred["auth_provider_x509_cert_url"],
-    "client_x509_cert_url": app_cred["client_x509_cert_url"],
-}
+# service_account_info = {
+#     "type": app_cred["type"],
+#     "project_id": app_cred["project_id"],
+#     "private_key_id": app_cred["private_key_id"],
+#     "private_key": app_cred["private_key"].replace('\n', '\\n'),  
+#     "client_email": app_cred["client_email"],
+#     "client_id": app_cred["client_id"],
+#     "auth_uri": app_cred["auth_uri"],
+#     "token_uri": app_cred["token_uri"],
+#     "auth_provider_x509_cert_url": app_cred["auth_provider_x509_cert_url"],
+#     "client_x509_cert_url": app_cred["client_x509_cert_url"],
+# }
 
+
+
+# Create credentials from the app_cred dictionary
+credentials = service_account.Credentials.from_service_account_info(app_cred)
+
+st.write("Authentication successful with Google Cloud")
+
+# Example OpenAI API request
+try:
+    response = openai.Completion.create(
+        engine="text-davinci-003",
+        prompt="Say hello!"
+    )
+    st.write(response)
+except Exception as e:
+    st.error(f"An error occurred: {str(e)}")
 
 # # Save to a temporary JSON file
 # import json
