@@ -63,6 +63,9 @@ app_cred = st.secrets["APP_CRED"]
 openai.api_key = openai_api_key
 
 
+# Load the service account JSON from Streamlit secrets and convert to string
+app_cred = json.dumps(st.secrets["APP_CRED"])
+
 # Write the credentials to a temporary file
 with open("service_account.json", "w") as f:
     f.write(app_cred)
