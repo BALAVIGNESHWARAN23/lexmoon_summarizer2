@@ -67,7 +67,7 @@ credentials = service_account.Credentials.from_service_account_info(app_cred)
 
 # Use the credentials where necessary, for example, in Google API calls or other services
 
-st.write("Google Cloud authentication successful.")
+# st.write("Google Cloud authentication successful.")
 
 
 # Set page config with custom icon
