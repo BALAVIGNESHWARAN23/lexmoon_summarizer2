@@ -8,6 +8,7 @@ from google.cloud import translate_v2 as translate
 import os
 from datetime import datetime 
 import toml
+import json 
 
 
 
