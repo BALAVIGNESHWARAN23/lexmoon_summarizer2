@@ -62,6 +62,14 @@ app_cred = st.secrets["APP_CRED"]
 # Set OpenAI API key
 openai.api_key = openai_api_key
 
+
+# Write the credentials to a temporary file
+with open("service_account.json", "w") as f:
+    f.write(app_cred)
+
+# Set the GOOGLE_APPLICATION_CREDENTIALS environment variable
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "service_account.json"
+
 # Create credentials directly from the app_cred dictionary
 credentials = service_account.Credentials.from_service_account_info(app_cred)
 
