@@ -64,8 +64,12 @@ app_cred = st.secrets["APP_CRED"]
 openai.api_key = openai_api_key
 
 
-# Load the service account JSON from Streamlit secrets and convert to string
-app_cred = json.dumps(st.secrets["APP_CRED"])
+
+# Convert AttrDict to a regular dictionary
+app_cred_dict = dict(st.secrets["APP_CRED"])
+
+# Convert the dictionary to a JSON string
+app_cred = json.dumps(app_cred_dict)
 
 # Write the credentials to a temporary file
 with open("service_account.json", "w") as f:
@@ -73,13 +77,6 @@ with open("service_account.json", "w") as f:
 
 # Set the GOOGLE_APPLICATION_CREDENTIALS environment variable
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "service_account.json"
-
-# Create credentials directly from the app_cred dictionary
-credentials = service_account.Credentials.from_service_account_info(app_cred)
-
-# Use the credentials where necessary, for example, in Google API calls or other services
-
-# st.write("Google Cloud authentication successful.")
 
 
 # Set page config with custom icon
