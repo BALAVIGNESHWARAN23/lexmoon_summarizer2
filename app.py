@@ -41,12 +41,12 @@ service_account_info = {
 }
 
 
-# Save to a temporary JSON file
-import json
-with open("temp_service_account.json", "w") as json_file:
-    json.dump(service_account_info, json_file)
+# # Save to a temporary JSON file
+# import json
+# with open("temp_service_account.json", "w") as json_file:
+#     json.dump(service_account_info, json_file)
 
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "temp_service_account.json"
+# os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "temp_service_account.json"
 
 
 
