@@ -7,13 +7,48 @@ from dotenv import load_dotenv
 from google.cloud import translate_v2 as translate
 import os
 from datetime import datetime 
+import toml
 
 
 
 # Load environment variables
+# load_dotenv()
+# openai.api_key = os.getenv("OPENAI_API_KEY")
+# os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = os.getenv("APP_CRED")
+
+
+
 load_dotenv()
-openai.api_key = os.getenv("OPENAI_API_KEY")
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = os.getenv("APP_CRED")
+
+
+config = toml.load("config.toml")
+
+
+openai.api_key = config["openai"]["api_key"]
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "config.json"  
+
+# Create a service account JSON dynamically
+service_account_info = {
+    "type": config["APP_CRED"]["type"],
+    "project_id": config["APP_CRED"]["project_id"],
+    "private_key_id": config["APP_CRED"]["private_key_id"],
+    "private_key": config["APP_CRED"]["private_key"].replace('\n', '\n'),
+    "client_email": config["APP_CRED"]["client_email"],
+    "client_id": config["APP_CRED"]["client_id"],
+    "auth_uri": config["APP_CRED"]["auth_uri"],
+    "token_uri": config["APP_CRED"]["token_uri"],
+    "auth_provider_x509_cert_url": config["APP_CRED"]["auth_provider_x509_cert_url"],
+    "client_x509_cert_url": config["APP_CRED"]["client_x509_cert_url"],
+}
+
+# Save to a temporary JSON file
+import json
+with open("temp_service_account.json", "w") as json_file:
+    json.dump(service_account_info, json_file)
+
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "temp_service_account.json"
+
+
 
 # GOOGLE_APPLICATION_CREDENTIALS= st.secrets["gcp"]["APP_CRED"]
 
