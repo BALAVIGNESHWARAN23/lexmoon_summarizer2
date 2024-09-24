@@ -24,6 +24,8 @@ load_dotenv()
 openai_api_key = st.secrets["openai"]["api_key"]
 app_cred = st.secrets["APP_CRED"]
 
+openai.api_key = openai_api_key 
+
 # Create a service account JSON dynamically
 service_account_info = {
     "type": app_cred["type"],
