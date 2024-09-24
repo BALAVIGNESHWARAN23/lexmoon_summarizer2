@@ -26,17 +26,18 @@ app_cred = st.secrets["APP_CRED"]
 
 # Create a service account JSON dynamically
 service_account_info = {
-    "type": config["APP_CRED"]["type"],
-    "project_id": config["APP_CRED"]["project_id"],
-    "private_key_id": config["APP_CRED"]["private_key_id"],
-    "private_key": config["APP_CRED"]["private_key"].replace('\n', '\n'),
-    "client_email": config["APP_CRED"]["client_email"],
-    "client_id": config["APP_CRED"]["client_id"],
-    "auth_uri": config["APP_CRED"]["auth_uri"],
-    "token_uri": config["APP_CRED"]["token_uri"],
-    "auth_provider_x509_cert_url": config["APP_CRED"]["auth_provider_x509_cert_url"],
-    "client_x509_cert_url": config["APP_CRED"]["client_x509_cert_url"],
+    "type": app_cred["type"],
+    "project_id": app_cred["project_id"],
+    "private_key_id": app_cred["private_key_id"],
+    "private_key": app_cred["private_key"].replace('\n', '\\n'),  
+    "client_email": app_cred["client_email"],
+    "client_id": app_cred["client_id"],
+    "auth_uri": app_cred["auth_uri"],
+    "token_uri": app_cred["token_uri"],
+    "auth_provider_x509_cert_url": app_cred["auth_provider_x509_cert_url"],
+    "client_x509_cert_url": app_cred["client_x509_cert_url"],
 }
+
 
 # Save to a temporary JSON file
 import json
