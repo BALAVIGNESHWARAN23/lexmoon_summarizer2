@@ -21,11 +21,8 @@ import toml
 load_dotenv()
 
 
-config = toml.load("config.toml")
-
-
-openai.api_key = config["openai"]["api_key"]
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "config.json"  
+openai_api_key = st.secrets["openai"]["api_key"]
+app_cred = st.secrets["APP_CRED"]
 
 # Create a service account JSON dynamically
 service_account_info = {
@@ -49,8 +46,6 @@ with open("temp_service_account.json", "w") as json_file:
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "temp_service_account.json"
 
 
-
-# GOOGLE_APPLICATION_CREDENTIALS= st.secrets["gcp"]["APP_CRED"]
 
 # Set page config with custom icon
 im = Image.open("./20240917_222343.png")
